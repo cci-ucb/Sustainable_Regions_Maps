@@ -3,9 +3,16 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
 <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>	
+
+<script src="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/cartodb.js"></script>
+
+<link rel="stylesheet" href="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/themes/css/cartodb.css" />
 	
+<!-- 
 <script type="text/javascript" src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>
+
 <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" />
+-->
 <!-- Latest compiled and minified CSS-->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <!-- jQuery library-->
@@ -271,13 +278,11 @@ window.onload = function() {
   //Manually create states legends. Hide the presidential election legend when loading page (did this in CSS).
   $('body').append(stateslegend);
   $('body').append(stateslegend2);
-
-  // Add a basemap to the map object just created
-  L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+  
+  L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
   }).addTo(map_object);
-  
-  //stateslayer2.hide();
+
 }
 
 //Create function to remove all old layers except states layer whenever user clicks to show new layer
