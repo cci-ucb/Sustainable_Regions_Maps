@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>	
+	
+<script type="text/javascript" src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>
+<link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" />
+<!-- Latest compiled and minified CSS-->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<!-- jQuery library-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!-- Latest compiled JavaScript-->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<style>
+html, body, #map {
+	width: 100%;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+	font-family: 'Open Sans', sans-serif;
+}
+
+#layerSelectionContainer .dropdown  {
+	top: 50px;
+	left: 75px;
+	position: absolute;
+}
+
+#statesSelectionContainer .dropdown  {
+	top: 90px;
+	left: 75px;
+	position: fixed;
+}
+
+#mapContainer {
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	margin-left: 0;
+	margin-right: 0;
+	width: 100%;
+	height: 100%;
+	padding: 0;
+	position: absolute;
+}
+
+/* override default style for carto legends */
+
+#map .cartodb-legend-stack {
+	right: 30px;
+	width: 300px;
+}
+
+
+#map .cartodb-legend-stack .cartodb-legend .legend-title {
+	font-family: 'Open Sans', sans-serif;
+	color: black;
+	font-size: 12px;
+	font-weight: bold;
+	text-transform: none;
+}
+
+#map .cartodb-legend-stack .cartodb-legend li {
+	font-family: 'Open Sans', sans-serif;
+	color: black;
+	font-size: 11px;
+	font-weight: normal;
+	text-transform: none;
+}
+
+#map .cartodb-legend-stack .cartodb-legend li .bullet {
+	height: 10px;
+	width: 10px;
+}
+
+#stateslegend {
+	left: 50px; 
+	right: 900px;
+	width: 300px;
+}
+
+#stateslegend .legend-title {
+	font-family: 'Open Sans', sans-serif;
+	color: black;
+	font-size: 12px;
+	font-weight: bold;
+	text-transform: none;
+}
+
+#stateslegend li {
+	font-family: 'Open Sans', sans-serif;
+	color: black;
+	font-size: 11px;
+	font-weight: normal;
+	text-transform: none;
+}
+
+#stateslegend li .bullet {
+	height: 10px;
+	width: 10px;
+}
+
+#stateslegend2 {
+	left: 50px; 
+	right: 900px;
+	width: 300px;
+	height: 130px;
+	display: none;
+}
+
+#stateslegend2 .legend-title {
+	font-family: 'Open Sans', sans-serif;
+	color: black;
+	font-size: 12px;
+	font-weight: bold;
+	text-transform: none;
+}
+
+#stateslegend2 li {
+	font-family: 'Open Sans', sans-serif;
+	color: black;
+	font-size: 11px;
+	font-weight: normal;
+	text-transform: none;
+}
+
+#stateslegend2 li .bullet {
+	height: 10px;
+	width: 10px;
+}
+
+
+</style>
+</head>
+<body>
+<div id="mapContainer"></div>
+<div id ="layerSelectionContainer">
+<div class="dropdown"> 
+<!-- this button style is from the Bootstrap library -->
+  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    Choose another data series...
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu scrollable-menu" id="layer-selector" aria-labelledby="dropdownMenuDivider">
+      <li data-url="https://cci-shared-account.carto.com/api/v2/viz/ed191228-39b5-11e7-a03a-0e3ff518bd15/viz.json">
+      <a href="#">Population (2010)</a></li>
+    
+      <li data-url="https://cci-shared-account.carto.com/api/v2/viz/d53c57a2-77b8-4200-a8c9-47b117d33990/viz.json">
+      <a href="#">Poverty Rate (2014)</a></li>
+	  
+      <li data-url="https://cci-shared-account.carto.com/api/v2/viz/98307b1e-0eb5-4f1b-9bfb-6032e981d819/viz.json">
+      <a href="#">Percentage Foreign Born (2014)</a></li>
+	  
+      <li data-url="https://cci-shared-account.carto.com/api/v2/viz/b6804414-0113-46d3-9b92-d4d9f6a77868/viz.json">
+      <a href="#">Inequality (2014)</a></li>
+	  
+      <li data-url="https://cci-shared-account.carto.com/api/v2/viz/ee02a9b8-7b9d-4dff-9098-ab001c7dc8ad/viz.json">
+      <a href="#">Proportion of Residents of Color</a></li>
+	  
+      <li data-url="https://cci-shared-account.carto.com/api/v2/viz/c4208a06-1552-4b12-b74c-b1f1b6fdee78/viz.json">
+      <a href="#">Number of Municipalities per 10,000 People</a></li>
+	  
+      <li data-url="https://cci-shared-account.carto.com/api/v2/viz/ed9f299d-25e6-476b-82d8-7ea5b12dcb33/viz.json">
+      <a href="#">Median Income (2014)</a></li>
+	  
+      <li data-url="https://cci-shared-account.carto.com/api/v2/viz/eeeb82e7-f233-462c-b840-e03bc61fc528/viz.json">
+      <a href="#">Number of Consortium Signatories</a></li>
+	  
+      <li data-url="https://cci-shared-account.carto.com/api/v2/viz/f93f781e-710d-4560-baba-79ed79faf7d3/viz.json">
+      <a href="#">Sectoral Diversity Index</a></li>
+	  
+      <li data-url="https://cci-shared-account.carto.com/api/v2/viz/21d58919-af89-4ec7-b5d5-d44f91b84a86/viz.json">
+      <a href="#">Tech Sector by % Total Employment</a></li>
+	  
+      <li data-url="https://cci-shared-account.carto.com/api/v2/viz/e2915b5a-6afd-4ee8-a392-c764d5ba6098/viz.json">
+      <a href="#">Ed & Meds by % Total Employment</a></li>
+	  
+      <li data-url="https://cci-shared-account.carto.com/api/v2/viz/0cc45271-1adf-4004-b80c-38d7de902102/viz.json">
+      <a href="#">Manufacturing by % Total Employment</a></li>
+	  
+	</ul>
+
+</div>
+</div>
+<div id ="statesSelectionContainer">
+<div class="dropdown"> 
+<!-- this button style is from the Bootstrap library -->
+  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    Toggle the states layer
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu scrollable-menu" id="state-selector" aria-labelledby="dropdownMenuDivider">
+      <li data-url="https://cci-shared-account.carto.com/api/v2/viz/9ca10772-3cc3-11e7-b59e-0ecd1babdde5/viz.json" value = "show">
+      <a href="#">Inclusiveness Index</a></li>
+	  
+      <li data-url="https://cci-shared-account.carto.com/api/v2/viz/95e013c9-7a04-4d09-bf98-dd00497baf62/viz.json" value = "election">
+		  <a href="#"> 2016 Presidential Election Results </a></li>
+	  
+      <li data-url="https://cci-shared-account.carto.com/api/v2/viz/9ca10772-3cc3-11e7-b59e-0ecd1babdde5/viz.json" value = "no">
+		  <a href="#"> Turn Off </a></li>
+		  
+	</ul>
+
+</div>
+</div>
+
+  
+<script>
+// set the initial map options and url here
+var INITIAL_MAP_SETTINGS = {
+	detectRetina: true,
+	center_lat: 39.5,
+	center_lon: -98.35,
+	zoom: 4.5
+}
+
+var INITIAL_VISJSON_URL = $('#layer-selector .active').data('url');
+
+// state variables
+var activeVis = null;
+var baseQuery = null; // default for layer
+var activeQuery = null; // geo selection if any
+var activeCityName = null;
+var activeCityOutline = null;
+
+
+window.onload = function() {
+  $("#mapContainer").append("<div id='map'></div>");
+  // Choose center and zoom level
+  var options = {
+    center: [39.5, -98.35], 
+	  zoom: 4
+  }
+
+  // Instantiate map on specified DOM element
+  map_object = new L.Map('map', options);
+  
+  //Create states layer presidential election basemap. Hide this layer upon loading.
+  var statelayer2 = 'https://cci-shared-account.carto.com/api/v2/viz/95e013c9-7a04-4d09-bf98-dd00497baf62/viz.json';
+  cartodb.createLayer(map_object, statelayer2, {legends: false}).addTo(map_object).on('done', function(layer) {
+    stateslayer2= layer;
+	stateslayer2.hide();
+	});
+  
+  //Create states layer basemap
+  var statelayer = 'https://cci-shared-account.carto.com/api/v2/viz/9ca10772-3cc3-11e7-b59e-0ecd1babdde5/viz.json';
+  cartodb.createLayer(map_object, statelayer, {legends: false}).addTo(map_object).on('done', function(layer) {
+    stateslayer= layer;
+	});
+
+ 
+  var firstlayer = 'https://cci-shared-account.carto.com/api/v2/viz/ed191228-39b5-11e7-a03a-0e3ff518bd15/viz.json';
+  cartodb.createLayer(map_object, firstlayer).addTo(map_object).on('done', function(layer) {
+    layer1= layer;
+	});
+	
+	stateslegend = '<div class="cartodb-legend choropleth" id = "stateslegend"><div class="legend-title">Statewide Inclusiveness Index</div>' +
+	'<ul><li class="min">Low (-0.34)</li><li class="max">High (1.03)</li><li class="graph count_315"><div class="colors">' +
+	'<div class="quartile" style="background-color:#EDF8FB"></div><div class="quartile" style="background-color:#B2E2E2"></div>' +
+	'<div class="quartile" style="background-color:#66C2A4"></div>' +
+	'<div class="quartile" style="background-color:#2CA25F"></div>' +
+	'<div class="quartile" style="background-color:#006D2C"></div>' +
+	'</div></li></ul></div>';
+	
+	stateslegend2 = '<div class="cartodb-legend category" id = "stateslegend2"><div class="legend-title">2016 Presidential Election Results</div>' +
+	'<ul><li class="min">Low (-0.34)</li><li class="max">High (1.03)</li><li class="graph count_315"><div class="colors">' +
+	'<ul><li><div class="bullet" style="background: #0000ff"></div> Clinton</li><li><div class="bullet" style="background: #551a8b"></div> Split' +
+	'</li><li><div class="bullet" style="background: #ff0000"></div> Trump</li></ul></div>';
+	
+  //Manually create states legends. Hide the presidential election legend when loading page (did this in CSS).
+  $('body').append(stateslegend);
+  $('body').append(stateslegend2);
+
+  // Add a basemap to the map object just created
+  L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
+  }).addTo(map_object);
+  
+  //stateslayer2.hide();
+}
+
+//Create function to remove all old layers except states layer whenever user clicks to show new layer
+function removeAllLayersExcept(new_layer) {
+  console.log('new_layer._leaflet_id:' + new_layer._leaflet_id);
+  var layer_index = 0;
+  map_object.eachLayer(function(layer) {
+    if (layer_index > 0 && layer._leaflet_id != new_layer._leaflet_id && layer._leaflet_id != stateslayer._leaflet_id && layer._leaflet_id != stateslayer2._leaflet_id) {
+      console.log('layer removed:' + layer._leaflet_id);
+      setTimeout(function () { // give a little time before removing previous tile layer because new one will appear with some transition.
+        map_object.removeLayer(layer);
+      }, 500);
+    }
+    layer_index++;
+  });
+}
+
+
+$('#layer-selector li').click(function() {
+	var url = $(this).data('url');
+	
+  cartodb.createLayer(map_object, url)
+    .addTo(map_object).on('done', function(layer) {
+    	removeAllLayersExcept(layer);
+    });
+});
+
+
+$('#state-selector li').click(function() {
+	var status = $(this).attr('value');
+	var url = $(this).data('url');
+	if (status == "no") {
+		stateslayer.hide();
+		stateslayer2.hide();
+		$("#stateslegend").css("display", "none");
+		$("#stateslegend2").css("display", "none");
+	}
+	else if (status == "election") {
+		stateslayer.hide();
+		stateslayer2.show();
+		$("#stateslegend2").css("display", "block");
+		$("#stateslegend").css("display", "none");
+	}
+	else if (status == 'show') {
+		stateslayer.show();
+		stateslayer2.hide();
+		$("#stateslegend").css("display", "block");
+		$("#stateslegend2").css("display", "none");
+	}
+});
+
+
+
+</script>
+
+</body>
+</html>
