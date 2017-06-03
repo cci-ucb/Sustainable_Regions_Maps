@@ -107,8 +107,8 @@ html, body, #map {
 #stateslegend2 {
 	left: 50px; 
 	right: 900px;
-	width: 300px;
-	height: 130px;
+	width: 230px;
+	height: 100px;
 	display: none;
 }
 
@@ -129,6 +129,35 @@ html, body, #map {
 }
 
 #stateslegend2 li .bullet {
+	height: 10px;
+	width: 10px;
+}
+
+#stateslegend3 {
+	left: 50px; 
+	right: 900px;
+	width: 230px;
+	height: 85px;
+	display: none;
+}
+
+#stateslegend3 .legend-title {
+	font-family: 'Open Sans', sans-serif;
+	color: black;
+	font-size: 12px;
+	font-weight: bold;
+	text-transform: none;
+}
+
+#stateslegend3 li {
+	font-family: 'Open Sans', sans-serif;
+	color: black;
+	font-size: 11px;
+	font-weight: normal;
+	text-transform: none;
+}
+
+#stateslegend3 li .bullet {
 	height: 10px;
 	width: 10px;
 }
@@ -159,7 +188,7 @@ html, body, #map {
       <a href="#">Inequality (2014)</a></li>
 	  
       <li data-url="https://cci-shared-account.carto.com/api/v2/viz/ee02a9b8-7b9d-4dff-9098-ab001c7dc8ad/viz.json">
-      <a href="#">Proportion of Residents of Color</a></li>
+      <a href="#">Percentage Residents of Color</a></li>
 	  
       <li data-url="https://cci-shared-account.carto.com/api/v2/viz/c4208a06-1552-4b12-b74c-b1f1b6fdee78/viz.json">
       <a href="#">Number of Municipalities per 10,000 People</a></li>
@@ -197,8 +226,11 @@ html, body, #map {
       <li data-url="https://cci-shared-account.carto.com/api/v2/viz/9ca10772-3cc3-11e7-b59e-0ecd1babdde5/viz.json" value = "show">
       <a href="#">Inclusiveness Index</a></li>
 	  
-      <li data-url="https://cci-shared-account.carto.com/api/v2/viz/95e013c9-7a04-4d09-bf98-dd00497baf62/viz.json" value = "election">
+      <li data-url="https://cci-shared-account.carto.com/api/v2/viz/95e013c9-7a04-4d09-bf98-dd00497baf62/viz.json" value = "election2016">
 		  <a href="#"> 2016 Presidential Election Results </a></li>
+		  
+	      <li data-url="https://cci-shared-account.carto.com/api/v2/viz/388143da-9241-4719-9eb4-c24bfbcbdfde/viz.json" value = "election2012">
+			  <a href="#"> 2012 Presidential Election Results </a></li>
 	  
       <li data-url="https://cci-shared-account.carto.com/api/v2/viz/9ca10772-3cc3-11e7-b59e-0ecd1babdde5/viz.json" value = "no">
 		  <a href="#"> Turn Off </a></li>
@@ -239,19 +271,26 @@ window.onload = function() {
   // Instantiate map on specified DOM element
   map_object = new L.Map('map', options);
   
-  //Create states layer presidential election basemap. Hide this layer upon loading.
+  
+  //Create states layer presidential election 2016 basemap. Hide this layer upon loading.
   var statelayer2 = 'https://cci-shared-account.carto.com/api/v2/viz/95e013c9-7a04-4d09-bf98-dd00497baf62/viz.json';
   cartodb.createLayer(map_object, statelayer2, {legends: false}).addTo(map_object).on('done', function(layer) {
     stateslayer2= layer;
 	stateslayer2.hide();
 	});
+	
+    //Create states layer presidential election 2012 basemap. Hide this layer upon loading.
+    var statelayer3 = 'https://cci-shared-account.carto.com/api/v2/viz/388143da-9241-4719-9eb4-c24bfbcbdfde/viz.json';
+    cartodb.createLayer(map_object, statelayer3, {legends: false}).addTo(map_object).on('done', function(layer) {
+      stateslayer3= layer;
+  	stateslayer3.hide();
+  	});
   
   //Create states layer basemap
   var statelayer = 'https://cci-shared-account.carto.com/api/v2/viz/9ca10772-3cc3-11e7-b59e-0ecd1babdde5/viz.json';
   cartodb.createLayer(map_object, statelayer, {legends: false}).addTo(map_object).on('done', function(layer) {
     stateslayer= layer;
 	});
-
  
   var firstlayer = 'https://cci-shared-account.carto.com/api/v2/viz/ed191228-39b5-11e7-a03a-0e3ff518bd15/viz.json';
   cartodb.createLayer(map_object, firstlayer).addTo(map_object).on('done', function(layer) {
@@ -267,13 +306,17 @@ window.onload = function() {
 	'</div></li></ul></div>';
 	
 	stateslegend2 = '<div class="cartodb-legend category" id = "stateslegend2"><div class="legend-title">2016 Presidential Election Results</div>' +
-	'<ul><li class="min">Low (-0.34)</li><li class="max">High (1.03)</li><li class="graph count_315"><div class="colors">' +
 	'<ul><li><div class="bullet" style="background: #0000ff"></div> Clinton</li><li><div class="bullet" style="background: #551a8b"></div> Split' +
 	'</li><li><div class="bullet" style="background: #ff0000"></div> Trump</li></ul></div>';
+	
+	stateslegend3 = '<div class="cartodb-legend category" id = "stateslegend3"><div class="legend-title">2012 Presidential Election Results</div>' +
+	'<ul><li><div class="bullet" style="background: #0000ff"></div> Clinton</li>' +
+	'<li><div class="bullet" style="background: #ff0000"></div> Romney</li></ul></div>';
 	
   //Manually create states legends. Hide the presidential election legend when loading page (did this in CSS).
   $('body').append(stateslegend);
   $('body').append(stateslegend2);
+  $('body').append(stateslegend3);
   
   L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
@@ -286,7 +329,7 @@ function removeAllLayersExcept(new_layer) {
   console.log('new_layer._leaflet_id:' + new_layer._leaflet_id);
   var layer_index = 0;
   map_object.eachLayer(function(layer) {
-    if (layer_index > 0 && layer._leaflet_id != new_layer._leaflet_id && layer._leaflet_id != stateslayer._leaflet_id && layer._leaflet_id != stateslayer2._leaflet_id) {
+    if (layer_index > 0 && layer._leaflet_id != new_layer._leaflet_id && layer._leaflet_id != stateslayer._leaflet_id && layer._leaflet_id != stateslayer2._leaflet_id && layer._leaflet_id != stateslayer3._leaflet_id) {
       console.log('layer removed:' + layer._leaflet_id);
       setTimeout(function () { // give a little time before removing previous tile layer because new one will appear with some transition.
         map_object.removeLayer(layer);
@@ -295,7 +338,6 @@ function removeAllLayersExcept(new_layer) {
     layer_index++;
   });
 }
-
 
 $('#layer-selector li').click(function() {
 	var url = $(this).data('url');
@@ -313,20 +355,34 @@ $('#state-selector li').click(function() {
 	if (status == "no") {
 		stateslayer.hide();
 		stateslayer2.hide();
+		stateslayer3.hide();
 		$("#stateslegend").css("display", "none");
 		$("#stateslegend2").css("display", "none");
+		$("#stateslegend3").css("display", "none");
 	}
-	else if (status == "election") {
+	else if (status == "election2016") {
 		stateslayer.hide();
 		stateslayer2.show();
+		stateslayer3.hide();
 		$("#stateslegend2").css("display", "block");
+		$("#stateslegend3").css("display", "none");
+		$("#stateslegend").css("display", "none");
+	}
+	else if (status == "election2012") {
+		stateslayer.hide();
+		stateslayer2.hide();
+		stateslayer3.show();
+		$("#stateslegend3").css("display", "block");
+		$("#stateslegend2").css("display", "none");
 		$("#stateslegend").css("display", "none");
 	}
 	else if (status == 'show') {
 		stateslayer.show();
 		stateslayer2.hide();
+		stateslayer3.hide();
 		$("#stateslegend").css("display", "block");
 		$("#stateslegend2").css("display", "none");
+		$("#stateslegend3").css("display", "none");
 	}
 });
 
