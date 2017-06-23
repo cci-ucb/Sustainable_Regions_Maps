@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,24 +20,22 @@
 <style>
 html, body, #map {
 	width: 100%;
+    /* edit height to leave space for a data dictionary at the bottom */
 	height: 100%;
 	padding: 0;
 	margin: 0;
 	font-family: 'Open Sans', sans-serif;
 }
-
 #layerSelectionContainer .dropdown  {
 	top: 50px;
 	left: 75px;
 	position: absolute;
 }
-
 #statesSelectionContainer .dropdown  {
 	top: 90px;
 	left: 75px;
 	position: fixed;
 }
-
 #mapContainer {
 	border-top: 1px solid #ccc;
 	border-bottom: 1px solid #ccc;
@@ -47,15 +46,11 @@ html, body, #map {
 	padding: 0;
 	position: absolute;
 }
-
 /* override default style for carto legends */
-
 #map .cartodb-legend-stack {
 	right: 30px;
 	width: 300px;
 }
-
-
 #map .cartodb-legend-stack .cartodb-legend .legend-title {
 	font-family: 'Open Sans', sans-serif;
 	color: black;
@@ -63,7 +58,6 @@ html, body, #map {
 	font-weight: bold;
 	text-transform: none;
 }
-
 #map .cartodb-legend-stack .cartodb-legend li {
 	font-family: 'Open Sans', sans-serif;
 	color: black;
@@ -71,18 +65,15 @@ html, body, #map {
 	font-weight: normal;
 	text-transform: none;
 }
-
 #map .cartodb-legend-stack .cartodb-legend li .bullet {
 	height: 10px;
 	width: 10px;
 }
-
 #stateslegend {
 	left: 50px; 
 	right: 900px;
 	width: 300px;
 }
-
 #stateslegend .legend-title {
 	font-family: 'Open Sans', sans-serif;
 	color: black;
@@ -90,7 +81,6 @@ html, body, #map {
 	font-weight: bold;
 	text-transform: none;
 }
-
 #stateslegend li {
 	font-family: 'Open Sans', sans-serif;
 	color: black;
@@ -98,12 +88,10 @@ html, body, #map {
 	font-weight: normal;
 	text-transform: none;
 }
-
 #stateslegend li .bullet {
 	height: 10px;
 	width: 10px;
 }
-
 #stateslegend2 {
 	left: 50px; 
 	right: 900px;
@@ -111,7 +99,6 @@ html, body, #map {
 	height: 100px;
 	display: none;
 }
-
 #stateslegend2 .legend-title {
 	font-family: 'Open Sans', sans-serif;
 	color: black;
@@ -119,7 +106,6 @@ html, body, #map {
 	font-weight: bold;
 	text-transform: none;
 }
-
 #stateslegend2 li {
 	font-family: 'Open Sans', sans-serif;
 	color: black;
@@ -127,12 +113,10 @@ html, body, #map {
 	font-weight: normal;
 	text-transform: none;
 }
-
 #stateslegend2 li .bullet {
 	height: 10px;
 	width: 10px;
 }
-
 #stateslegend3 {
 	left: 50px; 
 	right: 900px;
@@ -140,7 +124,6 @@ html, body, #map {
 	height: 85px;
 	display: none;
 }
-
 #stateslegend3 .legend-title {
 	font-family: 'Open Sans', sans-serif;
 	color: black;
@@ -148,7 +131,6 @@ html, body, #map {
 	font-weight: bold;
 	text-transform: none;
 }
-
 #stateslegend3 li {
 	font-family: 'Open Sans', sans-serif;
 	color: black;
@@ -156,13 +138,10 @@ html, body, #map {
 	font-weight: normal;
 	text-transform: none;
 }
-
 #stateslegend3 li .bullet {
 	height: 10px;
 	width: 10px;
 }
-
-
 </style>
 </head>
 <body>
@@ -175,6 +154,8 @@ html, body, #map {
     <span class="caret"></span>
   </button>
   <ul class="dropdown-menu scrollable-menu" id="layer-selector" aria-labelledby="dropdownMenuDivider">
+     <li><b> Demographic</b></li>
+      
       <li data-url="https://cci-shared-account.carto.com/api/v2/viz/ed191228-39b5-11e7-a03a-0e3ff518bd15/viz.json">
       <a href="#">Population (2010)</a></li>
     
@@ -183,23 +164,19 @@ html, body, #map {
 	  
       <li data-url="https://cci-shared-account.carto.com/api/v2/viz/98307b1e-0eb5-4f1b-9bfb-6032e981d819/viz.json">
       <a href="#">Percentage Foreign Born (2014)</a></li>
-	  
-      <li data-url="https://cci-shared-account.carto.com/api/v2/viz/b6804414-0113-46d3-9b92-d4d9f6a77868/viz.json">
-      <a href="#">Inequality (2014)</a></li>
-	  
+      
       <li data-url="https://cci-shared-account.carto.com/api/v2/viz/ee02a9b8-7b9d-4dff-9098-ab001c7dc8ad/viz.json">
       <a href="#">Percentage Residents of Color</a></li>
-	  
-      <li data-url="https://cci-shared-account.carto.com/api/v2/viz/c4208a06-1552-4b12-b74c-b1f1b6fdee78/viz.json">
-      <a href="#">Number of Municipalities per 10,000 People</a></li>
-	  
+      
+      <li><b> Economic</b></li>
+      
+      <li data-url="https://cci-shared-account.carto.com/api/v2/viz/b6804414-0113-46d3-9b92-d4d9f6a77868/viz.json">
+      <a href="#">Inequality (2014)</a></li>
+      
       <li data-url="https://cci-shared-account.carto.com/api/v2/viz/ed9f299d-25e6-476b-82d8-7ea5b12dcb33/viz.json">
       <a href="#">Median Income (2014)</a></li>
-	  
-      <li data-url="https://cci-shared-account.carto.com/api/v2/viz/eeeb82e7-f233-462c-b840-e03bc61fc528/viz.json">
-      <a href="#">Number of Consortium Signatories</a></li>
-	  
-      <li data-url="https://cci-shared-account.carto.com/api/v2/viz/f93f781e-710d-4560-baba-79ed79faf7d3/viz.json">
+      
+       <li data-url="https://cci-shared-account.carto.com/api/v2/viz/f93f781e-710d-4560-baba-79ed79faf7d3/viz.json">
       <a href="#">Sectoral Diversity Index</a></li>
 	  
       <li data-url="https://cci-shared-account.carto.com/api/v2/viz/21d58919-af89-4ec7-b5d5-d44f91b84a86/viz.json">
@@ -210,7 +187,48 @@ html, body, #map {
 	  
       <li data-url="https://cci-shared-account.carto.com/api/v2/viz/0cc45271-1adf-4004-b80c-38d7de902102/viz.json">
       <a href="#">Manufacturing by % Total Employment</a></li>
+      
+      <li data-url="https://cci-shared-account.carto.com/api/v2/viz/ce017c24-797f-4691-89ec-1abd49a845f5/viz.json">
+      <a href="#">% GDP, Public (2010)</a></li>
+      
+      <li data-url="https://cci-shared-account.carto.com/api/v2/viz/ae525f06-645b-46d1-ae7c-0d25122dcc3e/viz.json">
+      <a href="#">% GDP, Private (2010)</a></li>
+      
+      <li data-url="https://cci-shared-account.carto.com/api/v2/viz/01129a3a-1ebb-423d-86f0-54be6ebded32/viz.json">
+      <a href="#">% GDP, Public (2014)</a></li>
+      
+      <li data-url="https://cci-shared-account.carto.com/api/v2/viz/a7ce7b27-8b11-479b-84a3-d8de42b36ebe/viz.json">
+      <a href="#">% GDP, Private (2014)</a></li>
+      
+      <li><b> Governance</b></li>
+      
+      <li data-url="https://cci-shared-account.carto.com/api/v2/viz/c4208a06-1552-4b12-b74c-b1f1b6fdee78/viz.json">
+      <a href="#">Number of Municipalities per 10,000 People</a></li>
 	  
+      <li data-url="https://cci-shared-account.carto.com/api/v2/viz/eeeb82e7-f233-462c-b840-e03bc61fc528/viz.json">
+      <a href="#">Number of Consortium Signatories</a></li>
+      
+      <li data-url="https://cci-shared-account.carto.com/api/v2/viz/ec5c8746-972b-4ffb-9de6-eee209c80407/viz.json">
+      <a href="#">Grant Dollars Per Resident</a></li>
+      
+      <li data-url="https://cci-shared-account.carto.com/api/v2/viz/4ddecdd2-5b83-4532-9e22-6290df4b1589/viz.json">
+      <a href="#">% Consortium Members, Nonprofits</a></li>
+      
+      <li data-url="https://cci-shared-account.carto.com/api/v2/viz/90c9ab6e-dc08-442b-a0e7-004f4c0341bb/viz.json">
+      <a href="#">% Consortium Members, Businesses</a></li>
+      
+      <li data-url="https://cci-shared-account.carto.com/api/v2/viz/6486a590-39fb-45da-bc2e-b996fd8d297a/viz.json">
+      <a href="#">% Consortium Members, Universities</a></li>
+      
+      <li data-url="https://cci-shared-account.carto.com/api/v2/viz/4a983e4c-ed3b-496b-a35a-386eed7bef84/viz.json">
+      <a href="#">% Consortium Members, Local Governments</a></li>
+      
+      <li data-url="https://cci-shared-account.carto.com/api/v2/viz/50c9445a-38c9-4124-b322-35167ee22a3c/viz.json">
+      <a href="#">% Consortium Members, Regional Governments</a></li>
+      
+      <li data-url="https://cci-shared-account.carto.com/api/v2/viz/19e98d43-ff21-4c9c-a981-7e89353abd65/viz.json">
+      <a href="#">% Consortium Members, Other Governments</a></li>
+      
 	</ul>
 
 </div>
@@ -249,17 +267,13 @@ var INITIAL_MAP_SETTINGS = {
 	center_lon: -98.35,
 	zoom: 4.5
 }
-
 var INITIAL_VISJSON_URL = $('#layer-selector .active').data('url');
-
 // state variables
 var activeVis = null;
 var baseQuery = null; // default for layer
 var activeQuery = null; // geo selection if any
 var activeCityName = null;
 var activeCityOutline = null;
-
-
 window.onload = function() {
   $("#mapContainer").append("<div id='map'></div>");
   // Choose center and zoom level
@@ -267,7 +281,6 @@ window.onload = function() {
     center: [39.5, -98.35], 
 	  zoom: 4
   }
-
   // Instantiate map on specified DOM element
   map_object = new L.Map('map', options);
   
@@ -321,9 +334,7 @@ window.onload = function() {
   L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
   }).addTo(map_object);
-
 }
-
 //Create function to remove all old layers except states layer whenever user clicks to show new layer
 function removeAllLayersExcept(new_layer) {
   console.log('new_layer._leaflet_id:' + new_layer._leaflet_id);
@@ -338,7 +349,6 @@ function removeAllLayersExcept(new_layer) {
     layer_index++;
   });
 }
-
 $('#layer-selector li').click(function() {
 	var url = $(this).data('url');
 	
@@ -347,8 +357,6 @@ $('#layer-selector li').click(function() {
     	removeAllLayersExcept(layer);
     });
 });
-
-
 $('#state-selector li').click(function() {
 	var status = $(this).attr('value');
 	var url = $(this).data('url');
@@ -385,9 +393,6 @@ $('#state-selector li').click(function() {
 		$("#stateslegend3").css("display", "none");
 	}
 });
-
-
-
 </script>
 
 </body>
